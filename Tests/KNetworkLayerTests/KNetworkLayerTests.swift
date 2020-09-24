@@ -6,7 +6,7 @@ final class KNetworkLayerTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(KNetworkLayer().text, "Hello, World!")
+//        XCTAssertEqual(KNetworkLayer().text, "Hello, World!")
     }
 
     static var allTests = [

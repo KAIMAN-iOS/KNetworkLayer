@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
+          "branch": null,
+          "revision": "becd9a729a37bdbef5bc39dc3c702b99f9e3d046",
+          "version": "5.2.2"
+        }
+      },
+      {
         "package": "KNetworkLayer",
         "repositoryURL": "/Users/gg/Devs/KNetworkLayer",
         "state": {
-          "branch": "main",
-          "revision": "e7920b4cc4213a41938baa013dd672e7b8492366",
+          "branch": "master",
+          "revision": "fbd6449930857dd2fc45cf7af3519e46bd864e1d",
           "version": null
+        }
+      },
+      {
+        "package": "PromiseKit",
+        "repositoryURL": "https://github.com/mxcl/PromiseKit",
+        "state": {
+          "branch": null,
+          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
+          "version": "6.13.3"
         }
       }
     ]

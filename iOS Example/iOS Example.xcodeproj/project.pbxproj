@@ -15,7 +15,7 @@
 		C6DE06A6251C98B800DF0F05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DE06A4251C98B800DF0F05 /* LaunchScreen.storyboard */; };
 		C6DE06B1251C98B800DF0F05 /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE06B0251C98B800DF0F05 /* iOS_ExampleTests.swift */; };
 		C6DE06BC251C98B800DF0F05 /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE06BB251C98B800DF0F05 /* iOS_ExampleUITests.swift */; };
-		C6DE06CE251C994900DF0F05 /* KNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6DE06CD251C994900DF0F05 /* KNetworkLayer */; };
+		C6DE06D7251C9FDF00DF0F05 /* KNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6DE06CE251C994900DF0F05 /* KNetworkLayer in Frameworks */,
+				C6DE06D7251C9FDF00DF0F05 /* KNetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +147,7 @@
 			);
 			name = "iOS Example";
 			packageProductDependencies = (
-				C6DE06CD251C994900DF0F05 /* KNetworkLayer */,
+				C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */,
 			);
 			productName = "iOS Example";
 			productReference = C6DE0696251C98B600DF0F05 /* iOS Example.app */;
@@ -221,7 +221,7 @@
 			);
 			mainGroup = C6DE068D251C98B600DF0F05;
 			packageReferences = (
-				C6DE06CC251C994900DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */,
+				C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */,
 			);
 			productRefGroup = C6DE0697251C98B600DF0F05 /* Products */;
 			projectDirPath = "";
@@ -603,20 +603,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C6DE06CC251C994900DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */ = {
+		C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "../";
 			requirement = {
-				branch = main;
+				branch = master;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C6DE06CD251C994900DF0F05 /* KNetworkLayer */ = {
+		C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C6DE06CC251C994900DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */;
+			package = C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */;
 			productName = KNetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */

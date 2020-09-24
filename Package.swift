@@ -22,7 +22,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "KNetworkLayer",
-            dependencies: ["Alamofire", "PromiseKit"]),
+            dependencies: ["Alamofire", "PromiseKit"],
+            path: "Sources"),
         .testTarget(
             name: "KNetworkLayerTests",
             dependencies: ["KNetworkLayer"]),
