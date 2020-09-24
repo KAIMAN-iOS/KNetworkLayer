@@ -14,7 +14,7 @@ import UIKit
     Objet à fournir à l'objet API, ExpectedObject etant le type de réponse attendu si la requête à réussie.
  */
 open class RequestObject<ExpectedObject: Decodable> {
-    open typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
+    public typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
     
     let uniqueId: String = UUID().uuidString
     
