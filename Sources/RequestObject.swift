@@ -14,44 +14,44 @@ import UIKit
     Objet à fournir à l'objet API, ExpectedObject etant le type de réponse attendu si la requête à réussie.
  */
 open class RequestObject<ExpectedObject: Decodable> {
-    typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
+    public typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
     
     let uniqueId: String = UUID().uuidString
     
-    var parameters: RequestParameters? {
+    public var parameters: RequestParameters? {
         return nil
     }
     
-    var headers:  HTTPHeaders? {
+    public var headers:  HTTPHeaders? {
         return nil
     }
     
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .get
     }
     
-    var endpoint: String? {
+    public var endpoint: String? {
         return nil
     }
     
-    var uploadFiles: Bool {
+    public var uploadFiles: Bool {
         return false
     }
     
-    var encoding: ParameterEncoding {
+    public var encoding: ParameterEncoding {
         switch method {
             case .get:  return URLEncoding.default
             default:    return URLEncoding.default
         }
     }
     
-    func createMultiPartFormData(_ mpfd: MultipartFormData) {}
+    public func createMultiPartFormData(_ mpfd: MultipartFormData) {}
     
-    var mockJsonName: String? {
+    public var mockJsonName: String? {
         return nil
     }
     
-    var mockResponse: Bool {
+    public var mockResponse: Bool {
         return false
     }
 }
