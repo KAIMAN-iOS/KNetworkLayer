@@ -14,44 +14,44 @@ import UIKit
     Objet à fournir à l'objet API, ExpectedObject etant le type de réponse attendu si la requête à réussie.
  */
 open class RequestObject<ExpectedObject: Decodable> {
-    public typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
+    open typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
     
     let uniqueId: String = UUID().uuidString
     
-    public var parameters: RequestParameters? {
+    open var parameters: RequestParameters? {
         return nil
     }
     
-    public var headers:  HTTPHeaders? {
+    open var headers:  HTTPHeaders? {
         return nil
     }
     
-    public var method: HTTPMethod {
+    open var method: HTTPMethod {
         return .get
     }
     
-    public var endpoint: String? {
+    open var endpoint: String? {
         return nil
     }
     
-    public var uploadFiles: Bool {
+    open var uploadFiles: Bool {
         return false
     }
     
-    public var encoding: ParameterEncoding {
+    open var encoding: ParameterEncoding {
         switch method {
             case .get:  return URLEncoding.default
             default:    return URLEncoding.default
         }
     }
     
-    public func createMultiPartFormData(_ mpfd: MultipartFormData) {}
+    open func createMultiPartFormData(_ mpfd: MultipartFormData) {}
     
-    public var mockJsonName: String? {
+    open var mockJsonName: String? {
         return nil
     }
     
-    public var mockResponse: Bool {
+    open var mockResponse: Bool {
         return false
     }
 }
@@ -63,7 +63,7 @@ open class RequestParameters: Encodable {
 /*
 // MARK: - AppAPI
 // -
-public final struct AppAPI {
+open final struct AppAPI {
     private let api = DailySpecialApi.shared
     static let shared: AppAPI = AppAPI()
     private init() {}
