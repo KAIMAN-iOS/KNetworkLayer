@@ -1,69 +1,20 @@
 //
-//  RequestObject.swift
-//  GameOffer
+//  Api.swift
+//  iOS Example
 //
-//  Created by Jean Philippe on 10/09/2019.
-//  Copyright © 2019 jps. All rights reserved.
+//  Created by GG on 24/09/2020.
 //
 
-import Alamofire
-import Foundation
+import KNetworkLayer
 import UIKit
+import PromiseKit
+import Alamofire
 
-/**
-    Objet à fournir à l'objet API, ExpectedObject etant le type de réponse attendu si la requête à réussie.
- */
-public class RequestObject<ExpectedObject: Decodable> {
-    typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
-    
-    let uniqueId: String = UUID().uuidString
-    
-    var parameters: RequestParameters? {
-        return nil
-    }
-    
-    var headers:  HTTPHeaders? {
-        return nil
-    }
-    
-    var method: HTTPMethod {
-        return .get
-    }
-    
-    var endpoint: String? {
-        return nil
-    }
-    
-    var uploadFiles: Bool {
-        return false
-    }
-    
-    var encoding: ParameterEncoding {
-        switch method {
-            case .get:  return URLEncoding.default
-            default:    return URLEncoding.default
-        }
-    }
-    
-    func createMultiPartFormData(_ mpfd: MultipartFormData) {}
-    
-    var mockJsonName: String? {
-        return nil
-    }
-    
-    var mockResponse: Bool {
-        return false
-    }
-}
-
-public class RequestParameters: Encodable {
-}
 
 //MARK:- Example of an Internal class for API
-/*
 // MARK: - AppAPI
 // -
-public final struct AppAPI {
+struct AppAPI {
     private let api = DailySpecialApi.shared
     static let shared: AppAPI = AppAPI()
     private init() {}
@@ -79,7 +30,9 @@ public final struct AppAPI {
             DataManager.instance.store(user.currentUser)
         }
     }
-}private class DailySpecialApi: API {
+}
+
+private class DailySpecialApi: API {
     // Singleton
     static let shared: DailySpecialApi = DailySpecialApi()
     
@@ -105,10 +58,8 @@ public final struct AppAPI {
 // make all routes pamraetrs inherit from this class to allow common parameters...
 class CovidAppApiCommonParameters: RequestParameters {
 }
-*/
 
 //MARK:- Examples of a authen fails and retry code
-/*
 private extension AppAPI {
     func perform<T>(route: RequestObject<T>, showMessageOnFail: Bool = true) -> Promise<T> {
         return Promise<T>.init { resolver in
@@ -147,14 +98,14 @@ private extension AppAPI {
     
         }
     }
-}*/
+}
 
 // MARK: - Code example on how to use RequestObject to retrieve a User with parameters
 /**
  Obtenir les arrêts d’une ligne.
  - Returns: les arrêts dans l’ordre pour une ligne et une destination
  */
-/*class UpdateUserRoute: RequestObject<User> {
+class UpdateUserRoute: RequestObject<User> {
     // MARK: - RequestObject Protocol
     
     override var method: HTTPMethod {
@@ -209,5 +160,4 @@ class UpdateUserParameter: CovidAppApiCommonParameters {
         try container.encode(firstname, forKey: .firstname)
         try container.encode(dob, forKey: .dob)
     }
-}*/
-
+}

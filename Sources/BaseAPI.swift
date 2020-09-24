@@ -13,7 +13,7 @@ import PromiseKit
 
 
 // MARK: Protocol API Implementation
-protocol API {
+public protocol API {
     var baseURL: URL { get }
     var commonHeaders: HTTPHeaders? { get }
     var commonParameters: Parameters? { get }
@@ -21,14 +21,14 @@ protocol API {
     func perform<T: Decodable>(_ request: RequestObject<T>) -> Promise<T>
 }
 
-enum ApiError: Error {
+public enum ApiError: Error {
     case mockUpNotFound
 }
 
 /**
  Comportement par défaut d'un objet API
  */
-extension API {
+public extension API {
     
     var decoder: JSONDecoder {
         return JSONDecoder()

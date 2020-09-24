@@ -16,6 +16,7 @@
 		C6DE06B1251C98B800DF0F05 /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE06B0251C98B800DF0F05 /* iOS_ExampleTests.swift */; };
 		C6DE06BC251C98B800DF0F05 /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE06BB251C98B800DF0F05 /* iOS_ExampleUITests.swift */; };
 		C6DE06D7251C9FDF00DF0F05 /* KNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */; };
+		C6DE06DF251CA12900DF0F05 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE06DE251CA12900DF0F05 /* Api.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		C6DE06B7251C98B800DF0F05 /* iOS ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DE06BB251C98B800DF0F05 /* iOS_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ExampleUITests.swift; sourceTree = "<group>"; };
 		C6DE06BD251C98B800DF0F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6DE06DE251CA12900DF0F05 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				C6DE06A2251C98B800DF0F05 /* Assets.xcassets */,
 				C6DE06A4251C98B800DF0F05 /* LaunchScreen.storyboard */,
 				C6DE06A7251C98B800DF0F05 /* Info.plist */,
+				C6DE06DE251CA12900DF0F05 /* Api.swift */,
 			);
 			path = "iOS Example";
 			sourceTree = "<group>";
@@ -221,7 +224,7 @@
 			);
 			mainGroup = C6DE068D251C98B600DF0F05;
 			packageReferences = (
-				C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */,
+				C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "." */,
 			);
 			productRefGroup = C6DE0697251C98B600DF0F05 /* Products */;
 			projectDirPath = "";
@@ -268,6 +271,7 @@
 			files = (
 				C6DE069E251C98B600DF0F05 /* ViewController.swift in Sources */,
 				C6DE069A251C98B600DF0F05 /* AppDelegate.swift in Sources */,
+				C6DE06DF251CA12900DF0F05 /* Api.swift in Sources */,
 				C6DE069C251C98B600DF0F05 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -603,9 +607,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */ = {
+		C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "." */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "../";
+			repositoryURL = ../;
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -616,7 +620,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "KNetworkLayer" */;
+			package = C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "." */;
 			productName = KNetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
