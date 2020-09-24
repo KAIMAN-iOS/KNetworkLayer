@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "KNetworkLayer",
+        "repositoryURL": "/Users/gg/Devs/KNetworkLayer",
+        "state": {
+          "branch": "main",
+          "revision": "e7920b4cc4213a41938baa013dd672e7b8492366",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
