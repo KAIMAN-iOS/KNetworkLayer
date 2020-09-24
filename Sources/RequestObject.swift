@@ -13,7 +13,7 @@ import UIKit
 /**
     Objet à fournir à l'objet API, ExpectedObject etant le type de réponse attendu si la requête à réussie.
  */
-public class RequestObject<ExpectedObject: Decodable> {
+open class RequestObject<ExpectedObject: Decodable> {
     typealias RequestObjectCompletionHandler = (_ result: Result<ExpectedObject, Error>) -> Void
     
     let uniqueId: String = UUID().uuidString
@@ -56,7 +56,7 @@ public class RequestObject<ExpectedObject: Decodable> {
     }
 }
 
-public class RequestParameters: Encodable {
+open class RequestParameters: Encodable {
 }
 
 //MARK:- Example of an Internal class for API
