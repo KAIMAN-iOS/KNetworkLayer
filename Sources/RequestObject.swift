@@ -54,9 +54,11 @@ open class RequestObject<ExpectedObject: Decodable> {
     open var mockResponse: Bool {
         return false
     }
+    public init() {}
 }
 
 open class RequestParameters: Encodable {
+    public init() {}
 }
 
 //MARK:- Example of an Internal class for API

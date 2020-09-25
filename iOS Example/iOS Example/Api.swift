@@ -24,11 +24,8 @@ struct AppAPI {
         case refreshTokenFailed
     }
     
-    func updateUser(name: String, firstname: String, dob: Date) -> Promise<User> {
-        let route = UpdateUserRoute(name: name, firstname: firstname, dob: dob)
-        return perform(route: route).get { user in
-            DataManager.instance.store(user.currentUser)
-        }
+    func retrievePost(nb: Int) -> Promise<[Post]> {
+        return perform(route: RetrievePost(numberOfPost: nb))
     }
 }
 
@@ -38,7 +35,7 @@ private class DailySpecialApi: API {
     
     /// URL de base de l'api Transport.
     var baseURL: URL {
-        URL(string: Constants.network.rootUrl)!
+        URL(string: "https://jsonplaceholder.typicode.com")!
     }
     
     /// Headers communs à tous les appels (aucun pour cette api)/
@@ -100,12 +97,19 @@ private extension AppAPI {
     }
 }
 
+
+struct Post: Decodable {
+    var userId: Int
+    var id: Int
+    var title: String
+    var body: String
+}
 // MARK: - Code example on how to use RequestObject to retrieve a User with parameters
 /**
  Obtenir les arrêts d’une ligne.
  - Returns: les arrêts dans l’ordre pour une ligne et une destination
  */
-class UpdateUserRoute: RequestObject<User> {
+class RetrievePost: RequestObject<[Post]> {
     // MARK: - RequestObject Protocol
     
     override var method: HTTPMethod {
@@ -113,7 +117,7 @@ class UpdateUserRoute: RequestObject<User> {
     }
     
     override var endpoint: String? {
-        "user/post"
+        "/post"
     }
     
     override var encoding: ParameterEncoding {
@@ -121,43 +125,23 @@ class UpdateUserRoute: RequestObject<User> {
     }
     
     override var parameters: RequestParameters? {
-        return UpdateUserParameter(name: name, firstname: firstname, dob: dob)
+        return PostParameter(numberOfPost: numberOfPost)
         //        ["username" :  email! as Any]
     }
     // MARK: Initializers
-    let name: String
-    let firstname: String
-    let dob: String
+    let numberOfPost: Int
     
-    init(name: String, firstname: String, dob: Date) {
-        self.name = name
-        self.firstname = firstname
-        self.dob = Date.apiDateFormatter.string(from: dob)
+    init(numberOfPost: Int) {
+        super.init()
+        self.numberOfPost = numberOfPost
     }
 }
 
-class UpdateUserParameter: CovidAppApiCommonParameters {
-    let name: String
-    let firstname: String
-    let dob: String
+class PostParameter: CovidAppApiCommonParameters {
+    let numberOfPost: Int
     
-    init(name: String, firstname: String, dob: String) {
-        self.name = name
-        self.firstname = firstname
-        self.dob = dob
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case firstname = "firstname"
-        case dob = "dob"
-    }
-    
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(name, forKey: .name)
-        try container.encode(firstname, forKey: .firstname)
-        try container.encode(dob, forKey: .dob)
+    init(numberOfPost: Int) {
+        super.init()
+        self.numberOfPost = numberOfPost
     }
 }
