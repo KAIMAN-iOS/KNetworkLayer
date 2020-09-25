@@ -19,13 +19,8 @@ struct AppAPI {
     static let shared: AppAPI = AppAPI()
     private init() {}
     
-    enum ApiError: Error {
-        case noEmail
-        case refreshTokenFailed
-    }
-    
     func retrievePost(nb: Int) -> Promise<[Post]> {
-        return perform(route: RetrievePost(numberOfPost: nb))
+        return api.perform(RetrievePost())
     }
 }
 
@@ -35,13 +30,14 @@ private class DailySpecialApi: API {
     
     /// URL de base de l'api Transport.
     var baseURL: URL {
-        URL(string: "https://jsonplaceholder.typicode.com")!
+        URL(string: "http://jsonplaceholder.typicode.com")!
     }
     
     /// Headers communs à tous les appels (aucun pour cette api)/
     var commonHeaders: HTTPHeaders? {
-        let header = HTTPHeaders.init([HTTPHeader.contentType("application/json")])
-        return header
+//        let header = HTTPHeaders.init([HTTPHeader.contentType("application/json")])
+//        return header
+        return nil
     }
     
     var decoder: JSONDecoder {
@@ -53,50 +49,8 @@ private class DailySpecialApi: API {
 
 //MARK:- Common parameters Encodable base class
 // make all routes pamraetrs inherit from this class to allow common parameters...
-class CovidAppApiCommonParameters: RequestParameters {
+class AppApiCommonParameters: RequestParameters {
 }
-
-//MARK:- Examples of a authen fails and retry code
-private extension AppAPI {
-    func perform<T>(route: RequestObject<T>, showMessageOnFail: Bool = true) -> Promise<T> {
-        return Promise<T>.init { resolver in
-            performAndRetry(route: route)
-                .done { object in
-                    resolver.fulfill(object)
-            }
-            .catch { error in
-                if showMessageOnFail {
-//                    MessageManager.show(.request(.serverError))
-                }
-                resolver.reject(error)
-            }
-        }
-    }
-    
-    func performAndRetry<T>(route: RequestObject<T>) -> Promise<T> {
-        func refresh() -> Promise<T> {
-            self.performAndRetry(route: route)
-        }
-        
-        var hasRefreshed: Bool = false
-        return
-            api
-            .perform(route)
-            .recover { error -> Promise<T> in
-                switch error {
-                case AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 401)) where hasRefreshed == false:
-                    // only once
-                    hasRefreshed = true
-                    print("🐞 refresh token try....")
-                    return refresh()
-                    
-                default: return Promise<T>.init(error: error)
-                }
-    
-        }
-    }
-}
-
 
 struct Post: Decodable {
     var userId: Int
@@ -113,35 +67,71 @@ class RetrievePost: RequestObject<[Post]> {
     // MARK: - RequestObject Protocol
     
     override var method: HTTPMethod {
-        .post
+        .get
     }
     
     override var endpoint: String? {
-        "/post"
+        "/posts"
+        // "/posts/\(numberOfPosts)" for REST APIs
     }
     
     override var encoding: ParameterEncoding {
-        return JSONEncoding.default
+        return URLEncoding.default
     }
     
     override var parameters: RequestParameters? {
-        return PostParameter(numberOfPost: numberOfPost)
-        //        ["username" :  email! as Any]
-    }
-    // MARK: Initializers
-    let numberOfPost: Int
-    
-    init(numberOfPost: Int) {
-        super.init()
-        self.numberOfPost = numberOfPost
+        return nil
     }
 }
 
-class PostParameter: CovidAppApiCommonParameters {
+// used for POST PAERAMETERS
+class PostParameter: AppApiCommonParameters {
     let numberOfPost: Int
     
     init(numberOfPost: Int) {
-        super.init()
         self.numberOfPost = numberOfPost
+        super.init()
     }
 }
+
+//MARK:- Examples of a authen fails and retry code
+//private extension AppAPI {
+//    func perform<T>(route: RequestObject<T>, showMessageOnFail: Bool = true) -> Promise<T> {
+//        return Promise<T>.init { resolver in
+//            performAndRetry(route: route)
+//                .done { object in
+//                    resolver.fulfill(object)
+//            }
+//            .catch { error in
+//                if showMessageOnFail {
+////                    MessageManager.show(.request(.serverError))
+//                }
+//                resolver.reject(error)
+//            }
+//        }
+//    }
+//
+//    func performAndRetry<T>(route: RequestObject<T>) -> Promise<T> {
+//        func refresh() -> Promise<T> {
+//            self.performAndRetry(route: route)
+//        }
+//
+//        var hasRefreshed: Bool = false
+//        return
+//            api
+//            .perform(route)
+//            .recover { error -> Promise<T> in
+//                switch error {
+//                case AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 401)) where hasRefreshed == false:
+//                    // only once
+//                    hasRefreshed = true
+//                    print("🐞 refresh token try....")
+//                    return refresh()
+//
+//                default: return Promise<T>.init(error: error)
+//                }
+//
+//        }
+//    }
+//}
+
