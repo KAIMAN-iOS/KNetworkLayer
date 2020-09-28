@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         AppAPI
             .shared
-            .retrievePost(nb: 10)
+            .retrievePost(nb: 1)
             .done({ posts in
                 if let post = posts.first {
                     let alertController = UIAlertController(title: post.title, message: post.body, preferredStyle: .alert)
