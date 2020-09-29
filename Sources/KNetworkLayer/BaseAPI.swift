@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Alamofire
-import PromiseKit
 
 
 // MARK: Protocol API Implementation
@@ -18,7 +17,6 @@ public protocol API {
     var commonHeaders: HTTPHeaders? { get }
     var commonParameters: Parameters? { get }
     var decoder: JSONDecoder { get }
-    func perform<T: Decodable>(_ request: RequestObject<T>) -> Promise<T>
 }
 
 public enum ApiError: Error {
@@ -119,7 +117,7 @@ public extension API {
      
      - Returns: Objet attendu si le décodage de la réponse à réussi (objet), ou erreur s'il a échoué (error)
      */
-    private func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> (object: T?, error: Error?) {
+    func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> (object: T?, error: Error?) {
 
         guard let data = data else {
             return (nil, AFError.responseValidationFailed(reason: .dataFileNil))
@@ -146,40 +144,6 @@ public extension API {
         let dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""), method: request.method, parameters: request.parameters, encoder: JSONParameterEncoder.default, headers: headers, interceptor: nil)
         printDataRequest(request: dataRequest)
         return dataRequest
-    }
-    
-    func perform<T: Decodable>(_ request: RequestObject<T>) -> Promise<T> {
-        // MOCK UP HANDLE
-        guard request.mockResponse == false else {
-            return Promise<T>.init { resolver in
-                guard let jsonName = request.mockJsonName,
-                    let url = Bundle.main.url(forResource: jsonName, withExtension: "json"),
-                    let data =  try? Data(contentsOf: url) else {
-                    resolver.reject(ApiError.mockUpNotFound)
-                    return
-                }
-                let object = self.handleResponse(data: data, code: 200, expectedObject: T.self)
-                if let response = object.object {
-                    resolver.fulfill(response)
-                } else if let error = object.error {
-                    resolver.reject(error)
-                } else {
-                    resolver.reject(ApiError.mockUpNotFound)
-                }
-            }
-        }
-        
-        return Promise<T>.init { resolver in
-            self.dataRequest(request)
-                .responseJSON { (dataResponse) in
-                    self.printResponse(dataResponse)
-                    let result: Swift.Result<T, AFError> = self.handleDataResponse(dataResponse)
-                    switch result {
-                    case .success(let data): resolver.fulfill(data)
-                    case .failure(let error): resolver.reject(error)
-                    }
-            }
-        }
     }
     
     private func printDataRequest(request: DataRequest) {

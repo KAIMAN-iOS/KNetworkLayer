@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6B9F3D42523375F00D3316E /* kPromiseNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */; };
 		C6DE069A251C98B600DF0F05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE0699251C98B600DF0F05 /* AppDelegate.swift */; };
 		C6DE069C251C98B600DF0F05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE069B251C98B600DF0F05 /* SceneDelegate.swift */; };
 		C6DE069E251C98B600DF0F05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE069D251C98B600DF0F05 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C6B9F3CE2523373400D3316E /* KNetworkLayer */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KNetworkLayer; path = ..; sourceTree = "<group>"; };
 		C6DE0696251C98B600DF0F05 /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DE0699251C98B600DF0F05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6DE069B251C98B600DF0F05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6DE06D7251C9FDF00DF0F05 /* KNetworkLayer in Frameworks */,
+				C6B9F3D42523375F00D3316E /* kPromiseNetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,13 +83,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C6B9F3D22523375F00D3316E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C6DE068D251C98B600DF0F05 = {
 			isa = PBXGroup;
 			children = (
+				C6B9F3CE2523373400D3316E /* KNetworkLayer */,
 				C6DE0698251C98B600DF0F05 /* iOS Example */,
 				C6DE06AF251C98B800DF0F05 /* iOS ExampleTests */,
 				C6DE06BA251C98B800DF0F05 /* iOS ExampleUITests */,
 				C6DE0697251C98B600DF0F05 /* Products */,
+				C6B9F3D22523375F00D3316E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +163,7 @@
 			name = "iOS Example";
 			packageProductDependencies = (
 				C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */,
+				C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */,
 			);
 			productName = "iOS Example";
 			productReference = C6DE0696251C98B600DF0F05 /* iOS Example.app */;
@@ -618,6 +631,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = kPromiseNetworkLayer;
+		};
 		C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C6DE06D5251C9FDF00DF0F05 /* XCRemoteSwiftPackageReference "." */;

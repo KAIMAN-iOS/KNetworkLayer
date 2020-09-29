@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import KNetworkLayer
+import kPromiseNetworkLayer
 import PromiseKit
 import Alamofire
 
