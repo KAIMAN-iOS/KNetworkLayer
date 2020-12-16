@@ -141,7 +141,20 @@ public extension API {
         var headers: HTTPHeaders = HTTPHeaders()
         commonHeaders?.forEach({ headers.add($0) })
         request.headers?.forEach({ headers.add($0) })
-        let dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""), method: request.method, parameters: request.parameters, encoder: JSONParameterEncoder.default, headers: headers, interceptor: nil)
+        let dataRequest: DataRequest!
+        if let data = request.multipartData {
+            dataRequest = AF.upload(multipartFormData: data,
+                                        to: baseURL.appendingPathComponent(request.endpoint ?? ""),
+                                        method: .post,
+                                        headers: headers)
+        } else {
+            dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""),
+                                     method: request.method,
+                                     parameters: request.parameters,
+                                     encoder: JSONParameterEncoder.default,
+                                     headers: headers,
+                                     interceptor: nil)
+        }
         printDataRequest(request: dataRequest)
         return dataRequest
     }

@@ -19,23 +19,27 @@ open class RequestObject<ExpectedObject: Decodable> {
     let uniqueId: String = UUID().uuidString
     
     open var parameters: RequestParameters? {
-        return nil
+        nil
+    }
+    
+    open var multipartData: MultipartFormData? {
+        nil
     }
     
     open var headers:  HTTPHeaders? {
-        return nil
+        nil
     }
     
     open var method: HTTPMethod {
-        return .get
+        .get
     }
     
     open var endpoint: String? {
-        return nil
+        nil
     }
     
     open var uploadFiles: Bool {
-        return false
+        false
     }
     
     open var encoding: ParameterEncoding {
@@ -48,11 +52,11 @@ open class RequestObject<ExpectedObject: Decodable> {
     open func createMultiPartFormData(_ mpfd: MultipartFormData) {}
     
     open var mockJsonName: String? {
-        return nil
+        nil
     }
     
     open var mockResponse: Bool {
-        return false
+        false
     }
     public init() {}
 }
