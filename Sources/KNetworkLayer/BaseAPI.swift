@@ -151,7 +151,7 @@ public extension API {
             dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""),
                                      method: request.method,
                                      parameters: request.parameters,
-                                     encoder: JSONParameterEncoder.default,
+                                     encoder: request.encoder,
                                      headers: headers,
                                      interceptor: nil)
         }
@@ -164,7 +164,6 @@ public extension API {
         if let url = request.convertible.urlRequest?.url { print("• URL: \(url)")}
         if let headers = request.convertible.urlRequest?.allHTTPHeaderFields { print("• Headers: \(headers))") }
         if let method = request.convertible.urlRequest?.method { print("• Method: \(method)") }
-        
         if let params = request.convertible.urlRequest?.httpBody {
             print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
         }

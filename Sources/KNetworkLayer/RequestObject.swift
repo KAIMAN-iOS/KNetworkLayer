@@ -49,6 +49,13 @@ open class RequestObject<ExpectedObject: Decodable> {
         }
     }
     
+    open var encoder: ParameterEncoder {
+        switch method {
+        case .post: return JSONParameterEncoder.default
+        default: return URLEncodedFormParameterEncoder.init(destination: .queryString)
+        }
+    }
+    
     open func createMultiPartFormData(_ mpfd: MultipartFormData) {}
     
     open var mockJsonName: String? {
