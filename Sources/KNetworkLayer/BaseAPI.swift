@@ -27,14 +27,8 @@ public enum ApiError: Error {
  Comportement par défaut d'un objet API
  */
 public extension API {
-    
-    var decoder: JSONDecoder {
-        return JSONDecoder()
-    }
-    
-    var commonParameters: Parameters? {
-        return nil
-    }
+    var decoder: JSONDecoder { JSONDecoder() }
+    var commonParameters: Parameters? { nil }
     
     func printRequest<T>(_ request: RequestObject<T>, urlRequest: URLRequest) {
         guard let url = urlRequest.url else { return }
@@ -54,6 +48,7 @@ public extension API {
      - Parameter dataResponse: Réponse Alamofire
      */
     func printResponse(_ dataResponse: DataResponse<Any, AFError>) {
+        #if NETWORK_LOGS
         print("\n🔵🔵🔵 Response:")
         if let data = dataResponse.data, let code = dataResponse.response?.statusCode, let str = String(data: data, encoding: .utf8), let url = dataResponse.request?.url {
             print("• URL: \(url)")
@@ -71,6 +66,7 @@ public extension API {
             print("• HEADERS")
             print("• \(headers)")
         }
+        #endif
     }
     
     /**
@@ -160,12 +156,14 @@ public extension API {
     }
     
     private func printDataRequest(request: DataRequest) {
+        #if NETWORK_LOGS
         print("\n💬💬💬 Request:")
         if let url = request.convertible.urlRequest?.url { print("• URL: \(url)")}
-        if let headers = request.convertible.urlRequest?.allHTTPHeaderFields { print("• Headers: \(headers))") }
+        if let headers = request.convertible.urlRequest?.headers { print("• Headers: \(headers))") }
         if let method = request.convertible.urlRequest?.method { print("• Method: \(method)") }
         if let params = request.convertible.urlRequest?.httpBody {
             print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
         }
+        #endif
     }
 }
