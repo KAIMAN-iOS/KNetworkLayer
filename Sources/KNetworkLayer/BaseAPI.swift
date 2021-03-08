@@ -48,7 +48,7 @@ public extension API {
      - Parameter dataResponse: Réponse Alamofire
      */
     func printResponse(_ dataResponse: DataResponse<Any, AFError>) {
-        #if NETWORK_LOGS
+//        #if NETWORK_LOGS
         print("\n🔵🔵🔵 Response:")
         if let data = dataResponse.data, let code = dataResponse.response?.statusCode, let str = String(data: data, encoding: .utf8), let url = dataResponse.request?.url {
             print("• URL: \(url)")
@@ -66,7 +66,7 @@ public extension API {
             print("• HEADERS")
             print("• \(headers)")
         }
-        #endif
+//        #endif
     }
     
     /**
@@ -156,7 +156,7 @@ public extension API {
     }
     
     private func printDataRequest(request: DataRequest) {
-        #if NETWORK_LOGS
+//        #if NETWORK_LOGS
         print("\n💬💬💬 Request:")
         if let url = request.convertible.urlRequest?.url { print("• URL: \(url)")}
         if let headers = request.convertible.urlRequest?.headers { print("• Headers: \(headers))") }
@@ -164,6 +164,6 @@ public extension API {
         if let params = request.convertible.urlRequest?.httpBody {
             print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
         }
-        #endif
+//        #endif
     }
 }
