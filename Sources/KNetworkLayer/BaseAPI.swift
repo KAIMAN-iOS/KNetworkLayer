@@ -141,7 +141,7 @@ public extension API {
         if let data = request.multipartData {
             dataRequest = AF.upload(multipartFormData: data,
                                         to: baseURL.appendingPathComponent(request.endpoint ?? ""),
-                                        method: .post,
+                                        method: request.method,
                                         headers: headers)
         } else {
             dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""),
