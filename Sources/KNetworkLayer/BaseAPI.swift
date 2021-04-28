@@ -114,21 +114,16 @@ public extension API {
      - Returns: Objet attendu si le décodage de la réponse à réussi (objet), ou erreur s'il a échoué (error)
      */
     func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> (object: T?, error: Error?) {
-
-        guard let data = data else {
-            return (nil, AFError.responseValidationFailed(reason: .dataFileNil))
-        }
-                
         switch code {
-        case 200:
+        case 200, 204:
             do {
-                let object = try decoder.decode(expectedObject, from: data)
+                let object = try decoder.decode(expectedObject, from: data == nil ? "{}".data(using: .utf8)! : data!)
                 return (object,nil)
             } catch {
                 return (nil, error)
             }
-//        case 500: return (nil, AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 500))))
-        default: return (nil, AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: code)))
+        default:
+            return data == nil ? (nil, AFError.responseValidationFailed(reason: .dataFileNil)) : (nil, AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: code)))
         }
     }
     
