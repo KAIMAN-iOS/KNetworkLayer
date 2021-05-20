@@ -9,18 +9,38 @@ import KNetworkLayer
 import UIKit
 import PromiseKit
 import Alamofire
-
+import KCombineNetworkLayer
+import Combine
 
 //MARK:- Example of an Internal class for API
 // MARK: - AppAPI
 // -
 struct AppAPI {
     private let api = DailySpecialApi.shared
+    private let authenticatedApi = AuthenticatedApi(baseURL: DailySpecialApi.shared.baseURL, storage: Token()) { completion in
+        let res: Swift.Result<AccessTokenStorage, Error> = .success(Token())
+        completion(res)
+    }
     static let shared: AppAPI = AppAPI()
     private init() {}
     
     func retrievePost(nb: Int) -> Promise<[Post]> {
         return api.perform(RetrievePost())
+    }
+    
+    func retrievePost(nb: Int) -> AnyPublisher<[Post], Error> {
+        api.publishDataRequest(RetrievePost())
+    }
+    
+    func authRetrievePost(nb: Int) -> AnyPublisher<[Post], Error> {
+        authenticatedApi.publishDataRequest(RetrievePost())
+    }
+}
+
+private class Token: NSObject, AccessTokenStorage {
+    var accessToken: JWT
+    override init() {
+        accessToken = ""
     }
 }
 

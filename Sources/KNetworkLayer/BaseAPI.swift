@@ -17,6 +17,7 @@ public protocol API {
     var commonHeaders: HTTPHeaders? { get }
     var commonParameters: Parameters? { get }
     var decoder: JSONDecoder { get }
+    var sessionManager: Session { get }
 }
 
 public enum ApiError: Error {
@@ -29,6 +30,7 @@ public enum ApiError: Error {
 public extension API {
     var decoder: JSONDecoder { JSONDecoder() }
     var commonParameters: Parameters? { nil }
+    var sessionManager: Session { Session() }
     
     func printRequest<T>(_ request: RequestObject<T>, urlRequest: URLRequest) {
         guard let url = urlRequest.url else { return }
@@ -42,13 +44,13 @@ public extension API {
             print("• Parameters: \(params)")
         }
     }
-
+    
     /**
      Log dans la console la réponse du serveur, formé de manière à ce que ça soit le plus lisible possible.
      - Parameter dataResponse: Réponse Alamofire
      */
     func printResponse(_ dataResponse: DataResponse<Any, AFError>) {
-//        #if NETWORK_LOGS
+        //        #if NETWORK_LOGS
         print("\n🔵🔵🔵 Response:")
         if let data = dataResponse.data, let code = dataResponse.response?.statusCode, let str = String(data: data, encoding: .utf8), let url = dataResponse.request?.url {
             print("• URL: \(url)")
@@ -66,17 +68,20 @@ public extension API {
             print("• HEADERS")
             print("• \(headers)")
         }
-//        #endif
+        //        #endif
     }
     
     /**
-    Traite une réponse Alamofire (DataResponse)
+     Traite une réponse Alamofire (DataResponse)
      - Parameter dataResponse: Objet de réponse d'une requête d'alamofire
      */
     func handleDataResponse<T: Decodable>(_ dataResponse: DataResponse<Any, AFError>) -> Swift.Result<T, AFError> {
-        
+        handleDataResponse(dataResponse.data, statusCode: dataResponse.response?.statusCode)
+    }
+    
+    func handleDataResponse<T: Decodable>(_ data: Data?, statusCode: Int?) -> Swift.Result<T, AFError> {
         let returnError: (_ error: AFError) -> Swift.Result<T, AFError> = { err in
-//            let error = NSError(domain: "unknown", code: 0, userInfo: nil)
+            //            let error = NSError(domain: "unknown", code: 0, userInfo: nil)
             print("🆘 Request failed \(err).")
             // Retourner ou faire un print sur err fait crasher l'app ???
             // called; this results in an invalid NSError instance. It will raise an exception in a future release. Please call errorWithDomain:code:userInfo: or initWithDomain:code:userInfo:. This message shown only once.
@@ -88,20 +93,19 @@ public extension API {
             return Swift.Result.success(obj)
         }
         
-        guard let code = dataResponse.response?.statusCode else {
+        guard let code = statusCode else {
             return returnError(AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: -1)))
         }
-
-        let handling = handleResponse(data: dataResponse.data, code: code, expectedObject: T.self)
         
-        if let error = handling.error as? AFError {
-            return returnError(error)
-        } else if let error = handling.error {
-            return returnError(AFError.responseSerializationFailed(reason: .customSerializationFailed(error: error)))
-        } else if let object = handling.object {
-            return returnSuccess(object)
-        } else {
-            return returnError(AFError.responseSerializationFailed(reason: .customSerializationFailed(error: NSError())))
+        let handling = handleResponse(data: data, code: code, expectedObject: T.self)
+        switch handling {
+        case .success(let object): return returnSuccess(object)
+        case .failure(let error):
+            if let error = error as? AFError {
+                return returnError(error)
+            } else {
+                return returnError(AFError.responseSerializationFailed(reason: .customSerializationFailed(error: error)))
+            }
         }
     }
     
@@ -113,17 +117,17 @@ public extension API {
      
      - Returns: Objet attendu si le décodage de la réponse à réussi (objet), ou erreur s'il a échoué (error)
      */
-    func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> (object: T?, error: Error?) {
+    func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> Result<T, Error> {
         switch code {
         case 200, 204:
             do {
                 let object = try decoder.decode(expectedObject, from: data == nil ? "{}".data(using: .utf8)! : data!)
-                return (object,nil)
+                return .success(object)
             } catch {
-                return (nil, error)
+                return .failure(error)
             }
         default:
-            return data == nil ? (nil, AFError.responseValidationFailed(reason: .dataFileNil)) : (nil, AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: code)))
+            return .failure(AFError.responseValidationFailed(reason: data == nil ? .dataFileNil : .unacceptableStatusCode(code: code)))
         }
     }
     
@@ -134,24 +138,24 @@ public extension API {
         request.headers?.forEach({ headers.add($0) })
         let dataRequest: DataRequest!
         if let data = request.multipartData {
-            dataRequest = AF.upload(multipartFormData: data,
-                                        to: baseURL.appendingPathComponent(request.endpoint ?? ""),
-                                        method: request.method,
-                                        headers: headers)
+            dataRequest = sessionManager.upload(multipartFormData: data,
+                                                to: baseURL.appendingPathComponent(request.endpoint ?? ""),
+                                                method: request.method,
+                                                headers: headers)
         } else {
-            dataRequest = AF.request(baseURL.appendingPathComponent(request.endpoint ?? ""),
-                                     method: request.method,
-                                     parameters: request.parameters,
-                                     encoder: request.encoder,
-                                     headers: headers,
-                                     interceptor: nil)
+            dataRequest = sessionManager.request(baseURL.appendingPathComponent(request.endpoint ?? ""),
+                                                 method: request.method,
+                                                 parameters: request.parameters,
+                                                 encoder: request.encoder,
+                                                 headers: headers,
+                                                 interceptor: nil)
         }
         printDataRequest(request: dataRequest)
         return dataRequest
     }
     
-    private func printDataRequest(request: DataRequest) {
-//        #if NETWORK_LOGS
+    func printDataRequest(request: DataRequest) {
+        //        #if NETWORK_LOGS
         print("\n💬💬💬 Request:")
         if let url = request.convertible.urlRequest?.url { print("• URL: \(url)")}
         if let headers = request.convertible.urlRequest?.headers { print("• Headers: \(headers))") }
@@ -159,6 +163,6 @@ public extension API {
         if let params = request.convertible.urlRequest?.httpBody {
             print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
         }
-//        #endif
+        //        #endif
     }
 }

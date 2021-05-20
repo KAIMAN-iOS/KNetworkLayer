@@ -21,13 +21,10 @@ public extension API {
                     resolver.reject(ApiError.mockUpNotFound)
                     return
                 }
-                let object = self.handleResponse(data: data, code: 200, expectedObject: T.self)
-                if let response = object.object {
-                    resolver.fulfill(response)
-                } else if let error = object.error {
-                    resolver.reject(error)
-                } else {
-                    resolver.reject(ApiError.mockUpNotFound)
+                let response = self.handleResponse(data: data, code: 200, expectedObject: T.self)
+                switch response {
+                case .success(let object): resolver.fulfill(object)
+                case .failure(let error): resolver.reject(error)
                 }
             }
         }

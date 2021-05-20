@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6589EBC265538B40058919D /* KCombineNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6589EBB265538B40058919D /* KCombineNetworkLayer */; };
 		C6B9F3D42523375F00D3316E /* kPromiseNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */; };
 		C6DE069A251C98B600DF0F05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE0699251C98B600DF0F05 /* AppDelegate.swift */; };
 		C6DE069C251C98B600DF0F05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DE069B251C98B600DF0F05 /* SceneDelegate.swift */; };
@@ -63,6 +64,7 @@
 			files = (
 				C6DE06D7251C9FDF00DF0F05 /* KNetworkLayer in Frameworks */,
 				C6B9F3D42523375F00D3316E /* kPromiseNetworkLayer in Frameworks */,
+				C6589EBC265538B40058919D /* KCombineNetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +166,7 @@
 			packageProductDependencies = (
 				C6DE06D6251C9FDF00DF0F05 /* KNetworkLayer */,
 				C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */,
+				C6589EBB265538B40058919D /* KCombineNetworkLayer */,
 			);
 			productName = "iOS Example";
 			productReference = C6DE0696251C98B600DF0F05 /* iOS Example.app */;
@@ -631,6 +634,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C6589EBB265538B40058919D /* KCombineNetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KCombineNetworkLayer;
+		};
 		C6B9F3D32523375F00D3316E /* kPromiseNetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = kPromiseNetworkLayer;

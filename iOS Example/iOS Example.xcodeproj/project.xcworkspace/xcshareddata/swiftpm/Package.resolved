@@ -6,17 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
           "branch": null,
-          "revision": "becd9a729a37bdbef5bc39dc3c702b99f9e3d046",
-          "version": "5.2.2"
-        }
-      },
-      {
-        "package": "KNetworkLayer",
-        "repositoryURL": "/Users/gg/Devs/SPM/KNetworkLayer",
-        "state": {
-          "branch": "master",
-          "revision": "169c23e7af89157208d4dab771a9e60fd1719b88",
-          "version": null
+          "revision": "f96b619bcb2383b43d898402283924b80e2c4bae",
+          "version": "5.4.3"
         }
       },
       {

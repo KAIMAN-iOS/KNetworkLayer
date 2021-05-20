@@ -14,6 +14,9 @@ let package = Package(
         .library(
             name: "kPromiseNetworkLayer",
             targets: ["kPromiseNetworkLayer"]),
+        .library(
+            name: "KCombineNetworkLayer",
+            targets: ["KCombineNetworkLayer"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -29,8 +32,8 @@ let package = Package(
         .target(
             name: "kPromiseNetworkLayer",
             dependencies: ["KNetworkLayer", "PromiseKit"]),
-        .testTarget(
-            name: "KNetworkLayerTests",
+        .target(
+            name: "KCombineNetworkLayer",
             dependencies: ["KNetworkLayer"]),
     ],
     swiftLanguageVersions: [.v5]
