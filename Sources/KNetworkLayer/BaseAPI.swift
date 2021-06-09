@@ -76,7 +76,8 @@ public extension API {
      - Parameter dataResponse: Objet de réponse d'une requête d'alamofire
      */
     func handleDataResponse<T: Decodable>(_ dataResponse: DataResponse<Any, AFError>) -> Swift.Result<T, AFError> {
-        handleDataResponse(dataResponse.data, statusCode: dataResponse.response?.statusCode)
+        //pprint("🤢 Reponse \(dataResponse.error)\n\(dataResponse.error?.localizedDescription)")
+        return handleDataResponse(dataResponse.data, statusCode: dataResponse.response?.statusCode)
     }
     
     func handleDataResponse<T: Decodable>(_ data: Data?, statusCode: Int?) -> Swift.Result<T, AFError> {
@@ -124,10 +125,11 @@ public extension API {
                 let object = try decoder.decode(expectedObject, from: data == nil ? "{}".data(using: .utf8)! : data!)
                 return .success(object)
             } catch {
+                print("🔌 \(error)")
                 return .failure(error)
             }
         default:
-            return .failure(AFError.responseValidationFailed(reason: data == nil ? .dataFileNil : .unacceptableStatusCode(code: code)))
+            return .failure(AFError.responseValidationFailed(reason: (data == nil && [401, 500].contains(code) == false) ? .dataFileNil : .unacceptableStatusCode(code: code)))
         }
     }
     
