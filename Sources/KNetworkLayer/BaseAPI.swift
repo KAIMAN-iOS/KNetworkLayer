@@ -76,6 +76,9 @@ public extension API {
      - Parameter dataResponse: Objet de réponse d'une requête d'alamofire
      */
     func handleDataResponse<T: Decodable>(_ dataResponse: DataResponse<Any, AFError>) -> Swift.Result<T, AFError> {
+        guard dataResponse.error == nil else {
+            return .failure(dataResponse.error!)
+        }
         //pprint("🤢 Reponse \(dataResponse.error)\n\(dataResponse.error?.localizedDescription)")
         return handleDataResponse(dataResponse.data, statusCode: dataResponse.response?.statusCode)
     }
