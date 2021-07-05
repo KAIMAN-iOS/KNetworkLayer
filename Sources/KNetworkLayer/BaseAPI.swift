@@ -77,7 +77,7 @@ public extension API {
      */
     func handleDataResponse<T: Decodable>(_ dataResponse: DataResponse<Any, AFError>) -> Swift.Result<T, AFError> {
         guard dataResponse.error == nil else {
-            return .failure(dataResponse.error!)
+            return Swift.Result.failure(dataResponse.response?.statusCode ?? 0 == 401 ? AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 401)) : dataResponse.error!)
         }
         //pprint("🤢 Reponse \(dataResponse.error)\n\(dataResponse.error?.localizedDescription)")
         return handleDataResponse(dataResponse.data, statusCode: dataResponse.response?.statusCode)
