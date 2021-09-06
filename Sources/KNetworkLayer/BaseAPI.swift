@@ -162,11 +162,15 @@ public extension API {
     func printDataRequest(request: DataRequest) {
         //        #if NETWORK_LOGS
         print("\n💬💬💬 Request:")
-        if let url = request.convertible.urlRequest?.url { print("• URL: \(url)")}
-        if let headers = request.convertible.urlRequest?.headers { print("• Headers: \(headers))") }
-        if let method = request.convertible.urlRequest?.method { print("• Method: \(method)") }
-        if let params = request.convertible.urlRequest?.httpBody {
-            print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
+        if let url = request.convertible.urlRequest?.url {
+            print("• URL: \(url)")
+            if let headers = request.convertible.urlRequest?.headers { print("• Headers: \(headers))") }
+            if let method = request.convertible.urlRequest?.method { print("• Method: \(method)") }
+            if let params = request.convertible.urlRequest?.httpBody {
+                print("• Parameters: \(String(data: params, encoding: .utf8) ?? "")")
+            }
+        } else {
+            print("Convertible : \(request.convertible)")
         }
         //        #endif
     }

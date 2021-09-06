@@ -51,7 +51,7 @@ open class RequestObject<ExpectedObject: Decodable> {
     
     open var encoder: ParameterEncoder {
         switch method {
-        case .post: return JSONParameterEncoder.default
+        case .post, .patch: return JSONParameterEncoder.default
         default: return URLEncodedFormParameterEncoder.init(destination: .queryString)
         }
     }
