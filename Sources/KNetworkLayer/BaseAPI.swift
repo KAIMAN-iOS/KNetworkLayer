@@ -123,7 +123,7 @@ public extension API {
      */
     func handleResponse<T: Decodable>(data: Data?, code: Int, expectedObject: T.Type) -> Result<T, Error> {
         switch code {
-        case 200, 204:
+        case 200, 201, 202, 203, 204:
             do {
                 let object = try decoder.decode(expectedObject, from: data == nil ? "{}".data(using: .utf8)! : data!)
                 return .success(object)
